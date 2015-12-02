@@ -162,7 +162,7 @@ namespace AP_Freq_APX_FFT
 
                 //Export FFT data
                 System.IO.Directory.CreateDirectory(savePath + dataFolder);
-                string filename = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Freq" + freq.ToString() + ".csv";
+                string filename = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Freq" + freq.ToString("D5") + ".csv";
                 APx.BenchMode.Measurements.Fft.ExportData(filename);
 
                 //Export FFT Image
