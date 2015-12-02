@@ -50,7 +50,7 @@
   <ItemGroup>
     <Reference Include="AudioPrecision.API, Version=4.2.0.0, Culture=neutral, PublicKeyToken=756ddf07b6e97975, processorArchitecture=MSIL" />
     <Reference Include="Interop.AP">
-      <HintPath>..\..\..\..\..\..\..\..\..\..\dev\VS2005_CSharp_Using_References\VS2005_CSharp_Using_References\obj\Debug\Interop.AP.dll</HintPath>
+      <HintPath>..\..\Interop.AP.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />

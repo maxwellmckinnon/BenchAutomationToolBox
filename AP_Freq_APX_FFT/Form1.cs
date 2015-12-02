@@ -167,7 +167,8 @@ namespace AP_Freq_APX_FFT
 
                 //Export FFT Image
                 string filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Freq" + freq.ToString() + ".jpg";
-                APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
+                APx.BenchMode.Measurements.Fft.Graphs[0].Save(filenameJPG, GraphImageType.JPG);
+                //APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
             }
 
             //Export APx file - bad idea file is huge 1.5GB!
