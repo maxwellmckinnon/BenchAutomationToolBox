@@ -468,7 +468,7 @@ namespace AP_Freq_APX_FFT
             textBox_Status.Text = "Running automation...\r\n";
             textBox_Status.Text += "Start Time: " + startRunTimeString + Environment.NewLine;
             
-            List<double> voltageToSweep = new List<double>() {1.65, 1.7, 1.75, 1.8, 1.85, 1.9, 1.95};
+            List<double> voltageToSweep = new List<double>() {1.65, 1.7, 1.75, 1.8, 1.85, 1.9, 1.95}; // Computer 1
             PowerSupply.E3631A PSU = new PowerSupply.E3631A();
             double oneFreq = 1000; //Sweep voltage at 1kHz
 
