@@ -162,11 +162,11 @@ namespace AP_Freq_APX_FFT
 
                 //Export FFT data
                 System.IO.Directory.CreateDirectory(savePath + dataFolder);
-                string filename = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Freq" + freq.ToString("D5") + ".csv";
+                string filename = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + "Freq" + freq.ToString("D5") + startRunTimeString  + ".csv";
                 APx.BenchMode.Measurements.Fft.ExportData(filename);
 
                 //Export FFT Image
-                string filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Freq" + freq.ToString("D5") + ".jpg";
+                string filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + "Freq" + freq.ToString("D5") + startRunTimeString  + ".jpg";
                 APx.BenchMode.Measurements.Fft.Graphs[0].Save(filenameJPG, GraphImageType.JPG);
                 //APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
             }
@@ -364,7 +364,7 @@ namespace AP_Freq_APX_FFT
         private void buttonDev_Click(object sender, EventArgs e)
         {
             //Put quick stuff in here. For instance, PSRR vs Voltage sweep.
-
+            
             RunCrosstalk_vs_AVDDVoltage_Kikusui_APx();
             //RunCrosstalk_vs_AVDDVoltage_APx();
             //RunCrosstalk_vs_Frequency_APx();
