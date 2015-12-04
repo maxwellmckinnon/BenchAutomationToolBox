@@ -480,7 +480,7 @@ namespace AP_Freq_APX_FFT
             APx.BenchMode.Measurements.Fft.Append = false;
             foreach (double v in voltageToSweep)
             {
-                //Change AP2700 frequency
+                //Change voltage
                 PSU.setVoltage(v, "P6V");
                 textBox_Status.Text += v.ToString() + "V" + Environment.NewLine;
                 try
@@ -515,9 +515,13 @@ namespace AP_Freq_APX_FFT
 
                 //Export FFT data
                 System.IO.Directory.CreateDirectory(savePath + dataFolder);
-                string filename = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Voltage" + v.ToString() + ".csv"; //Currently doesn't work correctly. Modify to output correct data. Currently outputs the same data over and over from the first sweep.
-
+                string filename = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Voltage" + v.ToString("D5") + ".csv"; //Currently doesn't work correctly. Modify to output correct data. Currently outputs the same data over and over from the first sweep.
                 APx.BenchMode.Measurements.Fft.ExportData(filename);
+
+                //Export FFT Image
+                string filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Voltage" + v.ToString("D5") + ".jpg";
+                APx.BenchMode.Measurements.Fft.Graphs[0].Save(filenameJPG, GraphImageType.JPG);
+                //APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
             }
 
             //Export APx file - bad idea file is huge 1.5GB!
