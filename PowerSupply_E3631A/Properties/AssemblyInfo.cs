@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PowerSupply_E3631A")]
+[assembly: AssemblyTitle("PowerSupply")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Maxim Integrated Products")]
-[assembly: AssemblyProduct("PowerSupply_E3631A")]
+[assembly: AssemblyProduct("PowerSupply")]
 [assembly: AssemblyCopyright("Copyright © Maxim Integrated Products 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

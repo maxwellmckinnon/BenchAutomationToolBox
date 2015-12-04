@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ivi.Visa.Interop;
 
-namespace PowerSupply_E3631A
+namespace PowerSupply
 {
     public class E3631A
     {

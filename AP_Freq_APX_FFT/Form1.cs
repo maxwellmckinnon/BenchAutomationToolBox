@@ -166,7 +166,7 @@ namespace AP_Freq_APX_FFT
                 APx.BenchMode.Measurements.Fft.ExportData(filename);
 
                 //Export FFT Image
-                string filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Freq" + freq.ToString() + ".jpg";
+                string filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Freq" + freq.ToString("D5") + ".jpg";
                 APx.BenchMode.Measurements.Fft.Graphs[0].Save(filenameJPG, GraphImageType.JPG);
                 //APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
             }
@@ -364,8 +364,9 @@ namespace AP_Freq_APX_FFT
         private void buttonDev_Click(object sender, EventArgs e)
         {
             //Put quick stuff in here. For instance, PSRR vs Voltage sweep.
-            
-            RunCrosstalk_vs_AVDDVoltage_APx();
+
+            RunCrosstalk_vs_AVDDVoltage_Kikusui_APx();
+            //RunCrosstalk_vs_AVDDVoltage_APx();
             //RunCrosstalk_vs_Frequency_APx();
             
         }
@@ -467,8 +468,8 @@ namespace AP_Freq_APX_FFT
             textBox_Status.Text = "Running automation...\r\n";
             textBox_Status.Text += "Start Time: " + startRunTimeString + Environment.NewLine;
             
-            List<double> voltageToSweep = new List<double>() {1.7, 1.75, 1.8, 1.85, 1.9, 1.95};
-            PowerSupply_E3631A.E3631A PSU = new PowerSupply_E3631A.E3631A();
+            List<double> voltageToSweep = new List<double>() {1.65, 1.7, 1.75, 1.8, 1.85, 1.9, 1.95};
+            PowerSupply.E3631A PSU = new PowerSupply.E3631A();
             double oneFreq = 1000; //Sweep voltage at 1kHz
 
             List<Tuple<double, double>> xTalk_voltage_dBV = new List<Tuple<double, double>>();
@@ -538,6 +539,94 @@ namespace AP_Freq_APX_FFT
             NativeMethods.AllowSleep();
         }
 
+        private void RunCrosstalk_vs_AVDDVoltage_Kikusui_APx()
+        {
+            //PDM on APx, Ripple plus DC on Kikusui, AP2700 providing ripple externally to Kikusui
+            //APx must be ready in FFT mode to capture the FFT
+
+            //This part steps the frequency on the AP2700, taking an FFT of each step using the APx. Typically 1M FFT w/ 8 avg is used.
+
+            NativeMethods.PreventSleep(); // Prevent computer from sleeping and disconnecting from APx
+
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
+            startRunTimeString = DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss");
+
+            textBox_Status.Text = "Running automation...\r\n";
+            textBox_Status.Text += "Start Time: " + startRunTimeString + Environment.NewLine;
+
+            List<double> voltageToSweep = new List<double>() { 1.7, 1.75, 1.8, 1.85, 1.9, 1.95 };
+            PowerSupply.KikusuiPBZ20_20 PSU = new PowerSupply.KikusuiPBZ20_20();
+
+            double oneFreq = 1000; //Sweep voltage at 1kHz
+
+            List<Tuple<double, double>> xTalk_voltage_dBV = new List<Tuple<double, double>>();
+
+            //Parse and update frequencies to sweep
+            //parse_FreqToSweep();
+
+            //Begin xTalk test
+            APx.BenchMode.Measurements.Fft.Append = false;
+            foreach (double v in voltageToSweep)
+            {
+                //Change voltage
+                PSU.setDCVoltage(v);
+                textBox_Status.Text += v.ToString() + "V" + Environment.NewLine;
+                try
+                {
+                    //Run APx FFT
+                    APx.BenchMode.Measurements.Fft.Start();
+                    while (APx.BenchMode.Measurements.Fft.IsStarted) //! Wait for FFT to finish
+                    {
+                        System.Threading.Thread.Sleep(100); // Sleep 100ms
+                    }
+
+                    //APx.BenchMode.Measurements.Fft.Append = true;
+
+                    //Grab FFT data
+                    double[] xValues = APx.BenchMode.Measurements.Fft.FFTSpectrum.GetXValues(InputChannelIndex.Ch1);
+                    double[] yValues = APx.BenchMode.Measurements.Fft.FFTSpectrum.GetYValues(InputChannelIndex.Ch1);
+
+                    double[] xValues_input = APx.BenchMode.Measurements.Fft.FFTSpectrum.GetXValues(InputChannelIndex.Ch2);
+                    double[] yValues_input = APx.BenchMode.Measurements.Fft.FFTSpectrum.GetYValues(InputChannelIndex.Ch2);
+
+                    //Grab desired point from data
+                    double xTalkVal = findCrosstalkValue(oneFreq, xValues, yValues, xValues_input, yValues_input);
+
+                    //Append data to xTalk data
+                    xTalk_voltage_dBV.Add(new Tuple<double, double>(v, xTalkVal));
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                //Export FFT data
+                System.IO.Directory.CreateDirectory(savePath + dataFolder);
+                string filename = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Voltage" + v.ToString("F5") + ".csv"; //Currently doesn't work correctly. Modify to output correct data. Currently outputs the same data over and over from the first sweep.
+                APx.BenchMode.Measurements.Fft.ExportData(filename);
+
+                //Export FFT Image
+                string filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "Voltage" + v.ToString("F5") + ".jpg";
+                APx.BenchMode.Measurements.Fft.Graphs[0].Save(filenameJPG, GraphImageType.JPG);
+                //APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
+            }
+
+            //Export APx file - bad idea file is huge 1.5GB!
+            //string filename_APx = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + ".approjx";
+            //APx.SaveProject(filename_APx);
+
+            //Export xTalk data
+            exportXtalkDatatoFile(xTalk_voltage_dBV);
+
+            //Report test time
+            sw.Stop();
+            textBox_Status.Text += "Automation finished. Automation Time: " + sw.Elapsed.ToString() + Environment.NewLine + "Absolute time Ended: " + DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss") + Environment.NewLine;
+
+            NativeMethods.AllowSleep();
+        }
+
         private void RunCrosstalk_vs_VBATVoltage_APx()
         {
             //Not finished
@@ -557,7 +646,7 @@ namespace AP_Freq_APX_FFT
             textBox_Status.Text += "Start Time: " + startRunTimeString + Environment.NewLine;
 
             List<double> voltageToSweep = new List<double>() { 1.7, 1.75, 1.8, 1.85, 1.9, 1.95 };
-            PowerSupply_E3631A.E3631A PSU = new PowerSupply_E3631A.E3631A();
+            PowerSupply.E3631A PSU = new PowerSupply.E3631A();
             double oneFreq = 1000; //Sweep voltage at 1kHz
 
             List<Tuple<double, double>> xTalk_voltage_dBV = new List<Tuple<double, double>>();

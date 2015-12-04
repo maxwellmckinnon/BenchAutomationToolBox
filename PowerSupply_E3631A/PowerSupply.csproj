@@ -7,8 +7,8 @@
     <ProjectGuid>{E4B82256-2492-40B4-853F-E571E48D26CC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PowerSupply_E3631A</RootNamespace>
-    <AssemblyName>PowerSupply_E3631A</AssemblyName>
+    <RootNamespace>PowerSupply</RootNamespace>
+    <AssemblyName>PowerSupply</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="E3631A.cs" />
+    <Compile Include="KikusuiPBZ20-20.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
