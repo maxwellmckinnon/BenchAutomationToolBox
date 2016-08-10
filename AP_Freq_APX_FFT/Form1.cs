@@ -472,6 +472,14 @@ namespace AP_Freq_APX_FFT
                     
                     //APx.BenchMode.Measurements.Fft.ExportData(filename);
                 }
+
+                if (i == 0)
+                {
+                    //Export FFT Image
+                    string filenamePSUJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "PSU" + ".jpg";
+                    APx.BenchMode.Measurements.Fft.Graphs[0].Save(filenamePSUJPG, GraphImageType.JPG);
+                    //APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
+                }
             }
             
             
@@ -495,6 +503,11 @@ namespace AP_Freq_APX_FFT
             exportXtalkDatatoFile(xTalk_freq_dBV, "VMON");
             List<Tuple<double, double>> xTalk_imon_freq_dBV = new List<Tuple<double, double>>(); // start new list
 
+            //Export FFT Image
+            string filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "VMON" + ".jpg";
+            APx.BenchMode.Measurements.Fft.Graphs[0].Save(filenameJPG, GraphImageType.JPG);
+            //APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
+
             f = 0;
             foreach (int freq in freqToSweep) //Loop through collected data and calculate crosstalk PSU to VMON
             {
@@ -513,6 +526,11 @@ namespace AP_Freq_APX_FFT
 
             //Export xTalk data
             exportXtalkDatatoFile(xTalk_imon_freq_dBV, "IMON");
+
+            //Export FFT Image
+            filenameJPG = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + "IMON" + ".jpg";
+            APx.BenchMode.Measurements.Fft.Graphs[0].Save(filenameJPG, GraphImageType.JPG);
+            //APx.BenchMode.Measurements.Fft.Graphs["Level"].Save(filenameJPG, GraphImageType.JPG); //not tested yet - test next time running code
 
             //Export APx file - bad idea file is huge 1.5GB!
             //string filename_APx = savePath + dataFolder + "\\xTalkAutomation_" + "rawFFTData" + startRunTimeString + ".approjx";
@@ -947,7 +965,10 @@ namespace AP_Freq_APX_FFT
             NativeMethods.AllowSleep();
         }
 
-        
+        private void RunCrosstalkAutomation_AtoD_Click(object sender, EventArgs e)
+        {
+            RunCrossTalk_APx_DigitalvsAnalog_vs_Frequency_Kikusui();
+        }
 
     }
 

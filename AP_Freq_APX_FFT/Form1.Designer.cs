@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -59,6 +60,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.buttonDev = new System.Windows.Forms.Button();
             this.button_SetupAP2700SW = new System.Windows.Forms.Button();
+            this.RunCrosstalkAutomation_AtoD = new System.Windows.Forms.Button();
+            this.AtoD_tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -124,9 +127,9 @@
             // 
             this.button_RunCrosstalkAutomation.Location = new System.Drawing.Point(48, 290);
             this.button_RunCrosstalkAutomation.Name = "button_RunCrosstalkAutomation";
-            this.button_RunCrosstalkAutomation.Size = new System.Drawing.Size(158, 42);
+            this.button_RunCrosstalkAutomation.Size = new System.Drawing.Size(74, 42);
             this.button_RunCrosstalkAutomation.TabIndex = 9;
-            this.button_RunCrosstalkAutomation.Text = "Run Crosstalk Automation";
+            this.button_RunCrosstalkAutomation.Text = "Run xTalk \r\nA -> A";
             this.button_RunCrosstalkAutomation.UseVisualStyleBackColor = true;
             this.button_RunCrosstalkAutomation.Click += new System.EventHandler(this.button_RunCrosstalkAutomation_Click);
             // 
@@ -342,11 +345,24 @@
             this.button_SetupAP2700SW.UseVisualStyleBackColor = true;
             this.button_SetupAP2700SW.Click += new System.EventHandler(this.button_SetupAP2700SW_Click);
             // 
+            // RunCrosstalkAutomation_AtoD
+            // 
+            this.RunCrosstalkAutomation_AtoD.Location = new System.Drawing.Point(132, 290);
+            this.RunCrosstalkAutomation_AtoD.Name = "RunCrosstalkAutomation_AtoD";
+            this.RunCrosstalkAutomation_AtoD.Size = new System.Drawing.Size(74, 42);
+            this.RunCrosstalkAutomation_AtoD.TabIndex = 26;
+            this.RunCrosstalkAutomation_AtoD.Text = "Run xTalk \r\nA -> D";
+            this.AtoD_tooltip.SetToolTip(this.RunCrosstalkAutomation_AtoD, "Run the automation of xTalk from Kikisui Rail + ripple to Digital signal (Default" +
+        " is VMON Ch 1, IMON Ch 2)");
+            this.RunCrosstalkAutomation_AtoD.UseVisualStyleBackColor = true;
+            this.RunCrosstalkAutomation_AtoD.Click += new System.EventHandler(this.RunCrosstalkAutomation_AtoD_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(524, 431);
+            this.Controls.Add(this.RunCrosstalkAutomation_AtoD);
             this.Controls.Add(this.button_SetupAP2700SW);
             this.Controls.Add(this.buttonDev);
             this.Controls.Add(this.button1);
@@ -414,5 +430,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button buttonDev;
         private System.Windows.Forms.Button button_SetupAP2700SW;
+        private System.Windows.Forms.Button RunCrosstalkAutomation_AtoD;
+        private System.Windows.Forms.ToolTip AtoD_tooltip;
     }
 }
