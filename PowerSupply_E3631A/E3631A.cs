@@ -11,7 +11,7 @@ namespace PowerSupply
     {
         ResourceManager rMgr = new ResourceManagerClass();
         FormattedIO488 src = new FormattedIO488Class();
-        string srcAddress = "GPIB::03";
+        string srcAddress = "GPIB::01";
 
         public E3631A()
         {

@@ -13,6 +13,11 @@ namespace PowerSupply
         FormattedIO488 src = new FormattedIO488Class();
         string srcAddress = "GPIB::07";
 
+        public KikusuiPBZ20_20(string addr)
+        {
+            setGPIBAddress(addr);
+            connectGPIB();
+        }
         public KikusuiPBZ20_20()
         {
             connectGPIB();
@@ -21,6 +26,16 @@ namespace PowerSupply
         public void setDCVoltage(double voltage)
         {
             src.WriteString("VOLT " + voltage.ToString("F3"));
+        }
+
+        public void setACVoltage(double voltage)
+        {
+            src.WriteString("VOLT:AC " + voltage.ToString("F3"));
+        }
+
+        public void setACFrequency(double freq)
+        {
+            src.WriteString("FREQ " + freq.ToString("F6"));
         }
 
         public void setGPIBAddress(string addr)

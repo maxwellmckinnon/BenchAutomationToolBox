@@ -58,6 +58,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.buttonDev = new System.Windows.Forms.Button();
+            this.button_SetupAP2700SW = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -178,9 +179,9 @@
             // 
             this.button_SetupAPSW.Location = new System.Drawing.Point(48, 104);
             this.button_SetupAPSW.Name = "button_SetupAPSW";
-            this.button_SetupAPSW.Size = new System.Drawing.Size(158, 42);
+            this.button_SetupAPSW.Size = new System.Drawing.Size(74, 42);
             this.button_SetupAPSW.TabIndex = 0;
-            this.button_SetupAPSW.Text = "Latch to APx and AP2700";
+            this.button_SetupAPSW.Text = "Latch to APx";
             this.button_SetupAPSW.UseVisualStyleBackColor = true;
             this.button_SetupAPSW.Click += new System.EventHandler(this.button_SetupAPSW_Click);
             // 
@@ -331,11 +332,22 @@
             this.buttonDev.UseVisualStyleBackColor = true;
             this.buttonDev.Click += new System.EventHandler(this.buttonDev_Click);
             // 
+            // button_SetupAP2700SW
+            // 
+            this.button_SetupAP2700SW.Location = new System.Drawing.Point(132, 104);
+            this.button_SetupAP2700SW.Name = "button_SetupAP2700SW";
+            this.button_SetupAP2700SW.Size = new System.Drawing.Size(74, 42);
+            this.button_SetupAP2700SW.TabIndex = 25;
+            this.button_SetupAP2700SW.Text = "Latch to AP2700";
+            this.button_SetupAP2700SW.UseVisualStyleBackColor = true;
+            this.button_SetupAP2700SW.Click += new System.EventHandler(this.button_SetupAP2700SW_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(524, 431);
+            this.Controls.Add(this.button_SetupAP2700SW);
             this.Controls.Add(this.buttonDev);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label11);
@@ -401,5 +413,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button buttonDev;
+        private System.Windows.Forms.Button button_SetupAP2700SW;
     }
 }
